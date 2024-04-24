@@ -22,22 +22,11 @@ app.use((req, res, next) => {
 });
 
 
-//ajout d'un livre
-app.post('/api/books', StuffRoutes )
-
-//partie poour modifier un book
-app.put('/api/books/:id', StuffRoutes)
-
-//bibliotheque de tout les livres 
-app.get('/api/books', StuffRoutes)
-
-//suppression d'un objets
-app.delete('/api/books/:id', StuffRoutes)
-
-//  partie concernant l'id en detail
-app.get('/api/books/:id', StuffRoutes);
+app.use('/api/books', StuffRoutes)
 
 app.use('/api/auth', userRoutes)
+
+
 
 
 

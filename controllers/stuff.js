@@ -3,15 +3,22 @@ const BookSchema = require ('../models/Thing')
 
 
 exports.createThing = (req,res,next)=>{  
-    delete req.body.id
-    const thing = new Thing(
-      {
-        ...req.body
-      }
-    );
-    thing.save()
-    .then( () => res.status(200).json({message : 'objet crée'}))
-    .catch( error => res.status(400).json({ message : 'objets non crée'})) 
+  console.log('0')
+  const thingBook = JSON.parse(req.body.thing)
+  console.log('etape 1')
+  delete thingBook.id
+  console.log('2')
+  delete thingBook.userId
+  console.log('3')
+  const book = new BookSchema({
+    ...thingBook, 
+    userId : req.auth.userId,
+    imageUrl : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  });
+
+  book.save()
+  .then(() => res.status(201).json({message : 'opbjet enregistré'}))
+  .catch( (error)  => {res.status(400).json({error})})
   }
 
 
@@ -33,8 +40,28 @@ exports.createThing = (req,res,next)=>{
     .catch( error => res.status(400).json())
   }
 
-  exports.IdThing =(req, res, next) => {
-    BookSchema.findOne({ id : req.params.id})
-      .then(thing => res.status(200).json(thing))
-      .catch(error => res.status(400).json(error));
-  }
+  
+
+  exports.IdThing = (req, res, next) => {
+    const bookId = req.params.id;
+
+    Book.findById(bookId)
+        .then((book) => {
+            if (!book) {
+                return res.status(404).json({
+                    message: "Livre non trouvé.",
+                    error: error,
+                });
+            }
+
+            res.status(200).json(book);
+        })
+        .catch((error) => {
+            res.status(500).json({
+                message:
+                    "Une erreur est survenue lors de la récupération du livre.",
+                error: error,
+            });
+        });
+};
+

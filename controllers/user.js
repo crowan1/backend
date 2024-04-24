@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const jsonwebtoken = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 
@@ -31,8 +31,13 @@ exports.login = (req,res,next)=>{
                         res.status(401).json({message : ' paire id ou mdp inccorect'})
                     } else {
                         res.status(200).json({
-                            userId : user.id,
-                            token: 'TOKEN'
+                            userId : user._id,
+                            token:  jwt.sign (
+                                {userId : user._id},
+                                'AZERTY_12345_6789',
+                                {expiresIn : '24H'}
+
+                            )
                         })
                     }
                 })
