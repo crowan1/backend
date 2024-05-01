@@ -2,21 +2,22 @@ const BookSchema = require ('../models/Thing')
 
 
 
-exports.createThing = (req,res,next)=>{  
-  console.log('0')
-  const thingBook = JSON.parse(req.body.thing)
-  console.log('etape 1')
-  delete thingBook.id
-  console.log('2')
-  delete thingBook.userId
-  console.log('3')
+exports.createThing =  (req,res,next)=>{  
+  console.log('0');
+  const bookData = JSON.parse(req.body.book);
+  console.log('etape 1');
+  delete bookData._id;
+  console.log('2');
+  delete bookData._userId;
+  console.log('3');
+
   const book = new BookSchema({
-    ...thingBook, 
-    userId : req.auth.userId,
-    imageUrl : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      ...bookData,
+      userId: req.auth.userId,
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
 
-  book.save()
+ book.save()
   .then(() => res.status(201).json({message : 'opbjet enregistré'}))
   .catch( (error)  => {res.status(400).json({error})})
   }

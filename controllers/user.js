@@ -28,6 +28,7 @@ exports.login = (req,res,next)=>{
         .then(user => {
             if (user === null){
                 res.status(401).json({message: 'paire id ou mdp incorrect'})
+       
             } else {
                 bcrypt.compare(req.body.password, user.password)
                 .then(valid =>{
