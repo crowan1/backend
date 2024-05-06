@@ -10,7 +10,7 @@ const ratingSchema = new mongoose.Schema({
 
 
 
-const bookSchema = new mongoose.Schema({
+const Book = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -28,6 +28,6 @@ const bookSchema = new mongoose.Schema({
     averageRating: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model('BookSchema', bookSchema)
+module.exports = mongoose.model('Book', Book)
 
 

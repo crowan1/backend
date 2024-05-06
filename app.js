@@ -5,16 +5,13 @@ const StuffRoutes = require('./routes/stuff')
 const userRoutes = require('./routes/user')
 
 
-
-
-
 mongoose.connect('mongodb+srv://MonVieuxGrimoire:azerty12345@crowns.z9bxsko.mongodb.net/?retryWrites=true&w=majority&appName=crowns',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-app.use(express.json())
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,6 +20,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json())
 
 app.use('/api/books', StuffRoutes)
 

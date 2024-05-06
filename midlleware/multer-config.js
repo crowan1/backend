@@ -1,4 +1,5 @@
 const multer = require('multer')
+const sharp = require ('sharp')
 
 const MINE_TYPES = {
     'image/jpg ': 'jpg',
@@ -12,9 +13,10 @@ const storage = multer.diskStorage({
     },
     filename : (req,file, callback)=>{
         const name = file.originalname.split(' ').join('_');
-        const extension = MINE_TYPES[file.minetype]
+        const extension = MINE_TYPES[file.mineType]
         callback(null, name + Date.now() + '.' + extension)
     }
 })
 
 module.exports = multer({storage}).single('image')  
+

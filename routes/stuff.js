@@ -8,9 +8,12 @@ const multer = require ('../midlleware/multer-config')
 
 router.get('/',   stuffCtrl.BibliothequeThing)
 router.get('/:id',  stuffCtrl.IdThing)
-router.post ('/',  auth, stuffCtrl.createThing)
-router.put('/:id',auth,  stuffCtrl.modifyThing)
-router.delete('/:id', auth,   stuffCtrl.deleteThing)  
+router.post ('/', auth, multer,  stuffCtrl.createThing)
+router.put('/:id', auth, stuffCtrl.modifyThing)
+router.delete('/:id', auth,  stuffCtrl.deleteThing)  
+router.post ('/:id/rating', stuffCtrl.rateThing)
+
+
 
 
 
