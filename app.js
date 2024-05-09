@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose')
 const StuffRoutes = require('./routes/stuff')
 const userRoutes = require('./routes/user')
+const path = require('path');
 
 
 mongoose.connect('mongodb+srv://MonVieuxGrimoire:azerty12345@crowns.z9bxsko.mongodb.net/?retryWrites=true&w=majority&appName=crowns',
@@ -22,13 +23,11 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use('/api/books', StuffRoutes)
 
 app.use('/api/auth', userRoutes)
-
-
-
-
 
 
 
