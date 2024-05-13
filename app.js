@@ -4,9 +4,10 @@ const mongoose = require('mongoose')
 const StuffRoutes = require('./routes/stuff')
 const userRoutes = require('./routes/user')
 const path = require('path');
+require("dotenv").config({ path: ".env" });
 
 
-mongoose.connect('mongodb+srv://MonVieuxGrimoire:azerty12345@crowns.z9bxsko.mongodb.net/?retryWrites=true&w=majority&appName=crowns',
+mongoose.connect(process.env.DATABASE_URL,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
